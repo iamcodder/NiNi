@@ -21,3 +21,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "NiNi"
 include(":app")
+include(":feature")
+include(":feature:device-pairing")
+include(":core")
+include(":core:theme")
+include(":core:navigation")
+include(":core:domain")
+include(":core:network")
+include(":core:service")
