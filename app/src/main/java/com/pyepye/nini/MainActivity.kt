@@ -8,11 +8,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.pyepye.device_pairing.DevicePairingScreen
-import com.pyepye.home_screen.HomeScreen
+import com.pyepye.device_pairing.navigation.devicePairing
+import com.pyepye.home_screen.navigation.homeScreen
 import com.pyepye.navigation.DevicePairingKey
-import com.pyepye.navigation.HomeScreenKey
-import com.pyepye.nini.ui.theme.NiNiTheme
+import com.pyepye.ui.theme.NiNiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,14 +23,8 @@ class MainActivity : ComponentActivity() {
                 NavDisplay(backStack = screenKeys, onBack = {
                     screenKeys.removeLastOrNull()
                 }, entryProvider = entryProvider {
-                    entry<DevicePairingKey> {
-                        DevicePairingScreen {
-                            screenKeys.add(HomeScreenKey)
-                        }
-                    }
-                    entry<HomeScreenKey> {
-                        HomeScreen()
-                    }
+                    devicePairing(screenKeys)
+                    homeScreen()
                 })
             }
         }
