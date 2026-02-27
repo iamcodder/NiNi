@@ -1,15 +1,17 @@
 package com.pyepye.nini
 
-import android.R.attr.name
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
+import com.pyepye.device_pairing.DevicePairingScreen
+import com.pyepye.home_screen.HomeScreen
+import com.pyepye.navigation.DevicePairingKey
+import com.pyepye.navigation.HomeScreenKey
 import com.pyepye.nini.ui.theme.NiNiTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,12 +20,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NiNiTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Text(
-                        text = "Hello $name!",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val screenKeys = remember { mutableStateListOf<Any>(DevicePairingKey) }
+                NavDisplay(backStack = screenKeys, onBack = {
+                    screenKeys.removeLastOrNull()
+                }, entryProvider = entryProvider {
+                    entry<DevicePairingKey> {
+                        DevicePairingScreen {
+                            screenKeys.add(HomeScreenKey)
+                        }
+                    }
+                    entry<HomeScreenKey> {
+                        HomeScreen()
+                    }
+                })
             }
         }
     }

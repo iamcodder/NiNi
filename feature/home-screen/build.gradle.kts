@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.pyepye.navigation"
+    namespace = "com.pyepye.home_screen"
     compileSdk {
         version = release(36)
     }
@@ -34,12 +35,11 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
-    api(libs.androidx.navigation3.ui)
-    api(libs.androidx.navigation3.runtime)
-    api(libs.androidx.lifecycle.viewmodel.navigation3)
-    api(libs.androidx.material3.adaptive.navigation3)
-    api(libs.kotlinx.serialization.core)
+    implementation(project(":core:ui"))
 }

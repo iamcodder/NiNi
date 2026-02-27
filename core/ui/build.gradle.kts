@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.pyepye.navigation"
+    namespace = "com.pyepye.ui"
     compileSdk {
         version = release(36)
     }
@@ -34,12 +35,25 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
+
 }
 
 dependencies {
-    api(libs.androidx.navigation3.ui)
-    api(libs.androidx.navigation3.runtime)
-    api(libs.androidx.lifecycle.viewmodel.navigation3)
-    api(libs.androidx.material3.adaptive.navigation3)
-    api(libs.kotlinx.serialization.core)
+    api(platform(libs.androidx.compose.bom))
+    api(libs.androidx.compose.ui)
+    api(libs.androidx.compose.ui.graphics)
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.ui.tooling.preview)
+    api(libs.androidx.activity.compose)
+    api(libs.androidx.lifecycle.runtime.ktx)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }
